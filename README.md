@@ -1,5 +1,5 @@
 # BDD Runner
-Constructs a runnable `suite` / `spec` hierarchy from BDD style `describe` / `it` statements.
+Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` statements.
 
 
 # Installation (First Time)
