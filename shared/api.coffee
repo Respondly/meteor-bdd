@@ -3,5 +3,3 @@
 
 BDD = {} unless BDD?
 
-
-console.log 'BDD', BDD
