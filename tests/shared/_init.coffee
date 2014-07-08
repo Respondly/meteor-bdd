@@ -3,4 +3,4 @@
 
 if Meteor.isClient
   Meteor.startup ->
-    $('title').html('Tests:bdd-runner')
+    $('title').html('Tests:bdd')

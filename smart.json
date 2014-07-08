@@ -1,5 +1,5 @@
 {
-  "name": "bdd-runner",
+  "name": "bdd",
   "description": "A runnable BDD suite/spec hierarhcy from describe/it statements.",
   "homepage": "",
   "author": "Phil Cockfield (https://github.com/philcockfield)",
