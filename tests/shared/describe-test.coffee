@@ -51,3 +51,51 @@ Test.run '[describe] statement',
       expect(BDD.suite.children.length).to.equal 1
       expect(parent.children.length).to.equal 2
 
+
+
+# ----------------------------------------------------------------------
+
+
+
+Test.run '[it] statement',
+  tearDown: -> BDD.reset()
+  tests:
+    'adds a spec to the root suite': (test) ->
+      it 'foo', ->
+      expect(BDD.suite.specs[0].name).to.equal 'foo'
+
+
+    'adds a spec with no function': (test) ->
+      it()
+      expect(BDD.suite.specs[0].func).to.equal undefined
+
+    'adds a spec to a suite': (test) ->
+      suite = BDD.describe 'foo', ->
+                it 'does something', ->
+      expect(suite.specs.length).to.equal 1
+      expect(suite.specs[0].name).to.equal 'does something'
+
+    'adds a deeply nested spec': (test) ->
+      describe '1', ->
+        describe '2', ->
+          describe '3', ->
+            it 'foo', ->
+      expect(BDD.suite.children[0].children[0].children[0].specs[0].name).to.equal 'foo'
+
+
+
+# ----------------------------------------------------------------------
+
+
+
+Test.run '[before] statement',
+  setup: ->
+  tearDown: ->
+  tests:
+    'spec': (test) ->
+
+
+
+
+
+
