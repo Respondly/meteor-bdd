@@ -1,4 +1,4 @@
-describe 'describe', ->
+describe '[describe] statement', ->
   afterEach -> BDD.reset()
 
   it 'does not fail if not function is specified', ->
@@ -18,6 +18,11 @@ describe 'describe', ->
     BDD.reset()
     expect(BDD.suite.children.length).to.equal 0
 
+
+  it 'has an "Untitled" description', ->
+    expect(BDD.describe().name).to.equal 'Untitled'
+    expect(BDD.describe('').name).to.equal 'Untitled'
+    expect(BDD.describe('  ').name).to.equal 'Untitled'
 
 
   it 'adds a nested suite', ->
@@ -45,4 +50,5 @@ describe 'describe', ->
 
     expect(BDD.suite.children.length).to.equal 1
     expect(parent.children.length).to.equal 2
+
 

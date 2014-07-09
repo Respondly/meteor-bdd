@@ -34,11 +34,12 @@ class BDD.Suite
   @param value: A [Suite] or a [Spec].
   ###
   add: (value) ->
+    # Add Suite.
     if (value instanceof BDD.Suite)
       value.parent = @
       @children.push(value)
 
-    # TODO - Add Spec in the same way as a Suite.
+    # Add Spec.
     else if (value instanceof BDD.Spec)
       value.parent = @
       @specs.push(value)
@@ -46,6 +47,7 @@ class BDD.Suite
     else
       throw new Error('Type not supported.')
 
+    # Finish up.
     return value
 
 
