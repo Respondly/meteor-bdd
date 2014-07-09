@@ -1,3 +1,7 @@
+###
+@export describe
+###
+
 _currentSuite = null
 
 
@@ -7,7 +11,7 @@ Declares a test Suite.
 @param name: The name/description of the suite.
 @param func: The test function.
 ###
-BDD.describe = (name, func) ->
+describe = BDD.describe = (name, func) ->
   # Setup initial conditions.
   isRoot = not _currentSuite?
   startingSuite = _currentSuite ?= BDD.suite

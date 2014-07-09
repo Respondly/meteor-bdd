@@ -23,5 +23,4 @@ Test.run = (name, suite = {}) ->
     Munit.run(suite)
   catch err
     console.error(err.stack)
-
   suite
