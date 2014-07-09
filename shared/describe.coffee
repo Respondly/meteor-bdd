@@ -9,17 +9,12 @@ Declares a test Suite.
 @param func: The test function.
 ###
 BDD.describe = (name, func) ->
-
   # Setup initial conditions.
   isRoot = not _currentSuite?
   startingSuite = _currentSuite ?= BDD.suite
 
-  # console.log '_currentSuite', _currentSuite
-
   # Create the new suite.
-  suite = new BDD.Suite(name)
-  suite.parent = _currentSuite
-  _currentSuite.children.push(suite)
+  suite = _currentSuite.add(new BDD.Suite(name))
   _currentSuite = suite
 
   # Configure the suite.

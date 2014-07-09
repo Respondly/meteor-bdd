@@ -22,4 +22,32 @@ describe 'Suite (class)', ->
   it 'has [afterEach] handlers (before-all)', ->
     expect(suite.afterEach).to.be.an.instanceOf Handlers
 
+  it 'adds a child suite', ->
+    childSuite = new BDD.Suite('child')
+    result = suite.add(childSuite)
+    expect(result).to.equal childSuite
+    expect(childSuite.parent).to.equal suite
+    expect(suite.children.length).to.equal 1
+    expect(suite.children[0]).to.equal childSuite
+
+
+
+describe 'Suite (Dispose)', ->
+  it 'disposes of a suite', ->
+    parent = new BDD.Suite('parent')
+    child = new BDD.Suite('child')
+    parent.add(child)
+    parent.dispose()
+
+    expectDisposed = (suite) ->
+        expect(suite.isDisposed).to.equal true
+        expect(suite.before.isDisposed).to.equal true
+        expect(suite.after.isDisposed).to.equal true
+        expect(suite.beforeEach.isDisposed).to.equal true
+        expect(suite.afterEach.isDisposed).to.equal true
+
+    expectDisposed(parent)
+    expectDisposed(child)
+
+
 
