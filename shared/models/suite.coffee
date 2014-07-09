@@ -1,14 +1,15 @@
 ###
 Represents a suite of specs.
 ###
-Suite = class BDD.Suite
+class BDD.Suite
   ###
   Constructor.
   @param name: The name/description of the suite.
   ###
   constructor: (@name) ->
-    @children   = []
     @parent     = null
+    @children   = []
+    @specs      = []
     @before     = new Handlers()
     @beforeEach = new Handlers()
     @after      = new Handlers()
@@ -33,15 +34,19 @@ Suite = class BDD.Suite
   @param value: A [Suite] or a [Spec].
   ###
   add: (value) ->
-    if (value instanceof Suite)
+    if (value instanceof BDD.Suite)
       value.parent = @
       @children.push(value)
-      value
 
     # TODO - Add Spec in the same way as a Suite.
+    else if (value instanceof BDD.Spec)
+      value.parent = @
+      @specs.push(value)
 
     else
       throw new Error('Type not supported.')
+
+    return value
 
 
 

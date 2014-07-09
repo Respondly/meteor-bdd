@@ -5,6 +5,7 @@ describe 'Suite (class)', ->
   it 'has default values upon construction', ->
     expect(suite.name).to.equal 'foo'
     expect(suite.children).to.eql []
+    expect(suite.specs).to.eql []
 
   it 'has a root [Suite] instance on the BDD namespace', ->
     expect(BDD.suite).to.be.an.instanceOf BDD.Suite
@@ -30,6 +31,11 @@ describe 'Suite (class)', ->
     expect(suite.children.length).to.equal 1
     expect(suite.children[0]).to.equal childSuite
 
+  it 'adds a child spec', ->
+    spec = suite.add(new BDD.Spec('foo'))
+    expect(spec).to.be.an.instanceOf BDD.Spec
+    expect(spec.parent).to.equal suite
+    expect(suite.specs).to.eql [spec]
 
 
 describe 'Suite (Dispose)', ->
