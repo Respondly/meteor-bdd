@@ -1,12 +1,14 @@
-
-
 ###
 Represents a suite of specs.
 ###
 class BDD.Suite
   constructor: (@name) ->
-    @children = []
-    @parent = null
+    @children   = []
+    @parent     = null
+    @before     = new Handlers()
+    @beforeEach = new Handlers()
+    @after      = new Handlers()
+    @afterEach  = new Handlers()
 
 
 
@@ -16,6 +18,7 @@ class BDD.Suite
 # ----------------------------------------------------------------------
 
 
+
 ###
 Resets the set of suites.
 ###
@@ -23,5 +26,7 @@ BDD.reset = ->
   BDD.suite = new BDD.Suite('root')
 
 
-# INIT
+
+# INITIALIZE ----------------------------------------------------------------------
+
 BDD.reset()

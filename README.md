@@ -2,7 +2,8 @@
 Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` statements.
 
 
-# Installation (First Time)
+# Installation
+When running for the first time:
 
     mrt update
     package update
