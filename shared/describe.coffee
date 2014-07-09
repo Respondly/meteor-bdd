@@ -1,6 +1,3 @@
-###
-###
-
 _currentSuite = null
 
 
@@ -38,16 +35,54 @@ describe = BDD.describe = (name, func) ->
   result
 
 
+# ----------------------------------------------------------------------
+
 
 ###
 Declares a "spec" (test specification).
 @param name: The name/descripion of the test.
 @param func: The test function.
 ###
-it = (name, func) ->
-  suite = _currentSuite ? BDD.suite
-  spec = suite.add(new BDD.Spec(name, func))
-  spec
+it = (name, func) -> getSuite()?.add(new BDD.Spec(name, func))
+
+
+# ----------------------------------------------------------------------
+
+
+###
+Registers a function to run "before all" specs within the suite.
+@param func: The function to run.
+###
+before = (func) -> getSuite()?.before.push(func)
+
+
+###
+Registers a function to run "before each" spec within the suite.
+@param func: The function to run.
+###
+beforeEach = (func) -> getSuite()?.beforeEach.push(func)
+
+
+###
+Registers a function to run "after all" specs within the suite.
+@param func: The function to run.
+###
+afterEach = (func) -> getSuite()?.afterEach.push(func)
+
+
+###
+Registers a function to run "after all" specs within the suite.
+@param func: The function to run.
+###
+after = (func) -> getSuite()?.after.push(func)
+
+
+
+
+# PRIVATE ----------------------------------------------------------------------
+
+
+getSuite = -> _currentSuite ? BDD.suite
 
 
 

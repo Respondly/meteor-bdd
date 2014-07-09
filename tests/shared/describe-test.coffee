@@ -89,10 +89,80 @@ Test.run '[it] statement',
 
 
 Test.run '[before] statement',
-  setup: ->
-  tearDown: ->
+  tearDown: -> BDD.reset()
   tests:
-    'spec': (test) ->
+    'adds a [before] function to the root suite': (test) ->
+      fn = ->
+      before(fn)
+      expect(BDD.suite.before.contains(fn)).to.equal true
+
+    'adds a [before] function to a nested suite': (test) ->
+      fn = ->
+      describe 'my suite', ->
+        before(fn)
+      expect(BDD.suite.children[0].before.contains(fn)).to.equal true
+
+
+# ----------------------------------------------------------------------
+
+
+
+Test.run '[beforeEach] statement',
+  tearDown: -> BDD.reset()
+  tests:
+    'adds a [beforeEach] function to the root suite': (test) ->
+      fn = ->
+      beforeEach(fn)
+      expect(BDD.suite.beforeEach.contains(fn)).to.equal true
+
+    'adds a [beforeEach] function to a nested suite': (test) ->
+      fn = ->
+      describe 'my suite', ->
+        beforeEach(fn)
+      expect(BDD.suite.children[0].beforeEach.contains(fn)).to.equal true
+
+
+
+# ----------------------------------------------------------------------
+
+
+
+Test.run '[after] statement',
+  tearDown: -> BDD.reset()
+  tests:
+    'adds a [after] function to the root suite': (test) ->
+      fn = ->
+      after(fn)
+      expect(BDD.suite.after.contains(fn)).to.equal true
+
+    'adds a [after] function to a nested suite': (test) ->
+      fn = ->
+      describe 'my suite', ->
+        after(fn)
+      expect(BDD.suite.children[0].after.contains(fn)).to.equal true
+
+
+
+# ----------------------------------------------------------------------
+
+
+
+Test.run '[afterEach] statement',
+  tearDown: -> BDD.reset()
+  tests:
+    'adds a [afterEach] function to the root suite': (test) ->
+      fn = ->
+      afterEach(fn)
+      expect(BDD.suite.afterEach.contains(fn)).to.equal true
+
+    'adds a [afterEach] function to a nested suite': (test) ->
+      fn = ->
+      describe 'my suite', ->
+        afterEach(fn)
+      expect(BDD.suite.children[0].afterEach.contains(fn)).to.equal true
+
+
+
 
 
 
