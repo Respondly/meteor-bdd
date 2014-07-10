@@ -28,6 +28,7 @@ Package.on_test(function (api) {
   // Generated with: github.com/philcockfield/meteor-package-loader
   api.add_files('tests/shared/_init.coffee', ['client', 'server']);
   api.add_files('tests/shared/describe-test.coffee', ['client', 'server']);
+  api.add_files('tests/shared/run-test.coffee', ['client', 'server']);
   api.add_files('tests/shared/spec-test.coffee', ['client', 'server']);
   api.add_files('tests/shared/suite-test.coffee', ['client', 'server']);
 
