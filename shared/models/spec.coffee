@@ -1,7 +1,3 @@
-
-window?.onerror = (msg, url, line) -> console.log 'error', args
-
-
 ###
 Represents a single spec/test.
 ###
