@@ -13,6 +13,7 @@ class BDD.Spec
 
   ###
   constructor: (@name, @func) ->
+    @uid     = _.uniqueId('spec-')
     @parent  = null # The parent [Suite].
     @isAsync = Util.params(@func).length > 0
     @timeout = 5000

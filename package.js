@@ -8,8 +8,7 @@ Package.on_use(function (api) {
   api.use(['coffeescript', 'sugar']);
   api.use(['util']);
   api.export('BDD');
-  api.export(['describe', 'it']);
-  api.export(['before', 'beforeEach', 'afterEach', 'after']);
+  api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
 
   // Generated with: github.com/philcockfield/meteor-package-loader
   api.add_files('shared/api.coffee', ['client', 'server']);
