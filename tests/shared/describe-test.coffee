@@ -62,6 +62,7 @@ Test.run '[it] statement',
   tests:
     'adds a spec to the root suite': (test) ->
       it 'foo', ->
+      expect(BDD.suite.specs[0]).to.be.an.instanceOf BDD.Spec
       expect(BDD.suite.specs[0].name).to.equal 'foo'
 
 
@@ -94,13 +95,14 @@ Test.run '[before] statement',
     'adds a [before] function to the root suite': (test) ->
       fn = ->
       before(fn)
-      expect(BDD.suite.before.contains(fn)).to.equal true
+      expect(BDD.suite.before[0]).to.be.an.instanceOf BDD.Method
+      expect(BDD.suite.before[0].func).to.equal fn
 
     'adds a [before] function to a nested suite': (test) ->
       fn = ->
       describe 'my suite', ->
         before(fn)
-      expect(BDD.suite.children[0].before.contains(fn)).to.equal true
+      expect(BDD.suite.children[0].before[0].func).to.equal fn
 
 
 # ----------------------------------------------------------------------
@@ -113,13 +115,14 @@ Test.run '[beforeEach] statement',
     'adds a [beforeEach] function to the root suite': (test) ->
       fn = ->
       beforeEach(fn)
-      expect(BDD.suite.beforeEach.contains(fn)).to.equal true
+      expect(BDD.suite.beforeEach[0]).to.be.an.instanceOf BDD.Method
+      expect(BDD.suite.beforeEach[0].func).to.equal fn
 
     'adds a [beforeEach] function to a nested suite': (test) ->
       fn = ->
       describe 'my suite', ->
         beforeEach(fn)
-      expect(BDD.suite.children[0].beforeEach.contains(fn)).to.equal true
+      expect(BDD.suite.children[0].beforeEach[0].func).to.equal fn
 
 
 
@@ -133,13 +136,14 @@ Test.run '[after] statement',
     'adds a [after] function to the root suite': (test) ->
       fn = ->
       after(fn)
-      expect(BDD.suite.after.contains(fn)).to.equal true
+      expect(BDD.suite.after[0]).to.be.an.instanceOf BDD.Method
+      expect(BDD.suite.after[0].func).to.equal fn
 
     'adds a [after] function to a nested suite': (test) ->
       fn = ->
       describe 'my suite', ->
         after(fn)
-      expect(BDD.suite.children[0].after.contains(fn)).to.equal true
+      expect(BDD.suite.children[0].after[0].func).to.equal fn
 
 
 
@@ -153,13 +157,14 @@ Test.run '[afterEach] statement',
     'adds a [afterEach] function to the root suite': (test) ->
       fn = ->
       afterEach(fn)
-      expect(BDD.suite.afterEach.contains(fn)).to.equal true
+      expect(BDD.suite.afterEach[0]).to.be.an.instanceOf BDD.Method
+      expect(BDD.suite.afterEach[0].func).to.equal fn
 
     'adds a [afterEach] function to a nested suite': (test) ->
       fn = ->
       describe 'my suite', ->
         afterEach(fn)
-      expect(BDD.suite.children[0].afterEach.contains(fn)).to.equal true
+      expect(BDD.suite.children[0].afterEach[0].func).to.equal fn
 
 
 

@@ -10,10 +10,10 @@ class BDD.Suite
     @parent     = null
     @children   = []
     @specs      = []
-    @before     = new Handlers()
-    @beforeEach = new Handlers()
-    @after      = new Handlers()
-    @afterEach  = new Handlers()
+    @before     = []
+    @beforeEach = []
+    @after      = []
+    @afterEach  = []
 
 
   ###
@@ -21,10 +21,6 @@ class BDD.Suite
   ###
   dispose: ->
     child.dispose() for child in @children
-    @before.dispose()
-    @beforeEach.dispose()
-    @after.dispose()
-    @afterEach.dispose()
     @isDisposed = true
 
 

@@ -53,28 +53,28 @@ it = (name, func) -> getSuite()?.add(new BDD.Spec(name, func))
 Registers a function to run "before all" specs within the suite.
 @param func: The function to run.
 ###
-before = (func) -> getSuite()?.before.push(func)
+before = (func) -> getSuite()?.before.push(new BDD.Method(func))
 
 
 ###
 Registers a function to run "before each" spec within the suite.
 @param func: The function to run.
 ###
-beforeEach = (func) -> getSuite()?.beforeEach.push(func)
+beforeEach = (func) -> getSuite()?.beforeEach.push(new BDD.Method(func))
 
 
 ###
 Registers a function to run "after all" specs within the suite.
 @param func: The function to run.
 ###
-afterEach = (func) -> getSuite()?.afterEach.push(func)
+afterEach = (func) -> getSuite()?.afterEach.push(new BDD.Method(func))
 
 
 ###
 Registers a function to run "after all" specs within the suite.
 @param func: The function to run.
 ###
-after = (func) -> getSuite()?.after.push(func)
+after = (func) -> getSuite()?.after.push(new BDD.Method(func))
 
 
 

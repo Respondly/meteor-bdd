@@ -4,7 +4,6 @@ Represents an executable method.
 class BDD.Method
   ###
   Constructor.
-  @param name: The name/description of the spec.
   @param func:  The function.
                 A function with no parameters is considered synchronous.
                 A function with a parameter is considered an async callback, eg:
@@ -12,7 +11,7 @@ class BDD.Method
                     (done) -> # Callback.
 
   ###
-  constructor: (@name, @func) ->
+  constructor: (@func) ->
     @uid     = _.uniqueId()
     @parent  = null # The parent [Suite].
     @isAsync = Util.params(@func).length > 0
