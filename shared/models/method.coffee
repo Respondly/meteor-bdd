@@ -33,16 +33,36 @@ class BDD.Method
 
 
 ###
-Invokes a set of methods.
-@param context:     The context within which to run (or null).
-@param methods:     The set of Method objects.
-@param done(err):   (Optional) A callback to invoke upon completion.
-                               An error if one occured (including timeout).
+Invokes a collection of methods.
+@param context:         The context within which to run (or null).
+@param methods:         The set of Method objects.
+@param done(result):    A callback to invoke upon completion.
+                        The result is an object:
+                          - errors: An array of errors that occured.
+
 ###
-# BDD.Method.runMethods = (context, methods, done) ->
-#   # Setup initial conditions.
-#   context ?= @
-#   methods = [] unless Object.isArray(methods)
+BDD.Method.runMany = (methods, context, done) ->
+  # Setup initial conditions.
+  methods = [] unless Object.isArray(methods)
+  completedCount = 0
+  result =
+    errors:[]
+
+  onCompleted = ->
+        done?(result)
+        done = null # Prevent any further callbacks (edge-case).
+
+  onMethodCallback = (method, err) ->
+        completedCount += 1
+        if err?
+          result.errors.push { method:method, error:err }
+
+        if completedCount is methods.length
+          onCompleted()
+
+  for method in methods
+    do (method) ->
+      BDD.Method.run(method, context, (err) -> onMethodCallback(method, err))
 
 
 
@@ -52,8 +72,8 @@ Invokes a set of methods.
 Invokes a set of methods.
 @param method:      The Method object.
 @param context:     The context within which to run (or null).
-@param done(err):   (Optional) A callback to invoke upon completion.
-                               An error if one occured (including timeout).
+@param done(err):   A callback to invoke upon completion.
+                      err: An error if one occured (including timeout).
 ###
 BDD.Method.run = (method, context, done) ->
   # Setup initial conditions.

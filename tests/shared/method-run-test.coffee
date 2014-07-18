@@ -122,11 +122,74 @@ Test.run 'Method.run (Asynchronous Class Method)',
               err = e
               callback()
       runAsync done ->
-        expect(err).to.be.an.instanceOf chai.AssertionError
+          expect(err).to.be.an.instanceOf chai.AssertionError
 
 
 
+Test.run 'Method.runMany (Method)',
+  tearDown: -> BDD.reset()
+  tests:
+    'runs multiple methods with no errors (Synchronous)': (test) ->
+      context = null
+      methodCount1 = 0
+      methodCount2 = 0
+      doneCount = 0
+      result = undefined
 
+      method1 = new BDD.Method(-> methodCount1 += 1)
+      method2 = new BDD.Method(->
+        methodCount2 += 1
+        context = @
+        )
+      methods = [method1, method2]
+
+      BDD.Method.runMany methods, {foo:123}, (r) ->
+          doneCount += 1
+          result = r
+
+      expect(methodCount1).to.equal 1
+      expect(methodCount2).to.equal 1
+      expect(doneCount).to.equal 1
+      expect(context).to.eql {foo:123}
+      expect(result.errors.length).to.equal 0
+
+
+    'runs multiple methods with an error (Synchronous)': (test) ->
+      method1 = new BDD.Method(-> throw new Error('Foo'))
+      method2 = new BDD.Method(-> )
+      method3 = new BDD.Method(-> throw new Error('Bar'))
+      methods = [method1, method2, method3]
+      result = null
+
+      BDD.Method.runMany methods, null, (r) -> result = r
+
+      expect(result.errors.length).to.equal 2
+      expect(result.errors[0].method).to.equal method1
+      expect(result.errors[0].error.message).to.equal 'Foo'
+      expect(result.errors[1].method).to.equal method3
+      expect(result.errors[1].error.message).to.equal 'Bar'
+
+
+    'runs multiple methods with no errors (Synchronous and Asynchronous)': (test, done) ->
+      context = null
+      methodCount1 = 0
+      methodCount2 = 0
+
+      method1 = new BDD.Method(-> methodCount1 += 1)
+      method2 = new BDD.Method((done) ->
+        methodCount2 += 1
+        context = @
+        Util.delay 10, -> done() # Async here.
+        )
+      methods = [method1, method2]
+
+      runAsync = (callback) ->
+          BDD.Method.runMany methods, {foo:123}, (result) ->
+              callback()
+      runAsync done ->
+          expect(methodCount1).to.equal 1
+          expect(methodCount2).to.equal 1
+          expect(context).to.eql {foo:123}
 
 
 
