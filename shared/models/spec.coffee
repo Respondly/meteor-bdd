@@ -16,3 +16,4 @@ class BDD.Spec extends BDD.Method
   ###
   constructor: (@name, @func) ->
     super @func
+    @id = Util.hash(@name) if Object.isString(@name)

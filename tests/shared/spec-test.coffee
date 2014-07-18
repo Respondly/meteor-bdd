@@ -11,3 +11,9 @@ Test.run 'Spec (class)',
       method = new BDD.Spec('does something', fn)
       expect(method.name).to.equal 'does something'
       expect(method.func).to.equal fn
+
+
+    'has a unique ID as a hash of the name': (test) ->
+      spec = new BDD.Spec('does something', ->)
+      expect(spec.id).to.equal Util.hash('does something')
+

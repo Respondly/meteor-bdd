@@ -13,6 +13,7 @@ class BDD.Suite
     @beforeEach = []
     @after      = []
     @afterEach  = []
+    @id = Util.hash(@name) if Object.isString(@name)
 
 
   ###

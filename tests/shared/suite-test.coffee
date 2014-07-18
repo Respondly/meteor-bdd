@@ -12,6 +12,9 @@ Test.run 'Suite (class)',
       expect(suite.after).to.eql []
       expect(suite.afterEach).to.eql []
 
+    'has a unique ID as a hash of the name/description': (test) ->
+      expect(suite.id).to.equal Util.hash('foo')
+
     'has a root [Suite] instance on the BDD namespace': (test) ->
       expect(BDD.suite).to.be.an.instanceOf BDD.Suite
       expect(BDD.suite.name).to.equal 'root'

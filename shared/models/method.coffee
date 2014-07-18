@@ -12,7 +12,6 @@ class BDD.Method
 
   ###
   constructor: (@func) ->
-    @uid     = _.uniqueId()
     @parent  = null # The parent [Suite].
     @isAsync = Util.params(@func).length > 0
     @timeout = 5000
