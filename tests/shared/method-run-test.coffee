@@ -164,6 +164,7 @@ Test.run 'Method.runMany (Method)',
       BDD.Method.runMany methods, null, (r) -> result = r
 
       expect(result.errors.length).to.equal 2
+      expect(result.hasError).to.equal true
       expect(result.errors[0].method).to.equal method1
       expect(result.errors[0].error.message).to.equal 'Foo'
       expect(result.errors[1].method).to.equal method3

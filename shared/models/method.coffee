@@ -56,6 +56,7 @@ BDD.Method.runMany = (methods, context, done) ->
         completedCount += 1
         if err?
           result.errors.push { method:method, error:err }
+          result.hasError = true
 
         if completedCount is methods.length
           onCompleted()
