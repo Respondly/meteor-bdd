@@ -20,47 +20,76 @@ class BDD.Method
 
   ###
   Invokes the test function.
-  @param context:     (Optional) The context within which to run.
+  @param context:     The context within which to run (or null).
   @param done(err):   (Optional) A callback to invoke upon completion.
                                  An error if one occured (including timeout).
   ###
-  run: (context, done) ->
-    # Setup initial conditions.
-    return unless Object.isFunction(@func)
-    context ?= @
+  run: (context, done) -> BDD.Method.run(@, context, done)
 
-    if @isAsync
-      # Start timeout.
-      Util.delay @timeout, =>
-            if Object.isFunction(done)
-              done(new Error('Timed out'))
-              done = null # Ensure the callback cannot be invoked again.
 
-      # Invoke async function.
-      try
-        @func.call context, -> done?(null)
-      catch e
-        console?.error(e)
-        done?(e)
 
-    else
-      # Invoke synchronously.
-      try
-        @func.call(context)
-        done?(null)
-      catch e
-        console?.error(e)
-        done?(e)
+
+# CLASS METHODS ----------------------------------------------------------------------
+
+
+###
+Invokes a set of methods.
+@param context:     The context within which to run (or null).
+@param methods:     The set of Method objects.
+@param done(err):   (Optional) A callback to invoke upon completion.
+                               An error if one occured (including timeout).
+###
+# BDD.Method.runMethods = (context, methods, done) ->
+#   # Setup initial conditions.
+#   context ?= @
+#   methods = [] unless Object.isArray(methods)
 
 
 
 
 
+###
+Invokes a set of methods.
+@param method:      The Method object.
+@param context:     The context within which to run (or null).
+@param done(err):   (Optional) A callback to invoke upon completion.
+                               An error if one occured (including timeout).
+###
+BDD.Method.run = (method, context, done) ->
+  # Setup initial conditions.
+  context ?= method
+  if not (method instanceof BDD.Method)
+    throw new Error('Not a [Method] object')
+
+  if not Object.isFunction(method.func)
+    done?(null)
+    return
 
 
+  if method.isAsync
+    # Start timeout.
+    timer = Util.delay method.timeout, =>
+          if Object.isFunction(done)
+            done(new Error('Timed out'))
+            done = null # Ensure the callback cannot be invoked again.
 
+    # Invoke async function.
+    try
+      method.func.call context, ->
+          timer.stop()
+          done?(null)
+    catch e
+      console?.error(e)
+      done?(e)
 
-
+  else
+    # Invoke synchronously.
+    try
+      method.func.call(context)
+      done?(null)
+    catch e
+      console?.error(e)
+      done?(e)
 
 
 
