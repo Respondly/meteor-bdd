@@ -49,6 +49,12 @@ Test.run 'Method.run (Synchronous Class Method)',
       BDD.Method.run(method, null, (e) -> err = e)
       expect(err).to.be.an.instanceOf chai.AssertionError
 
+    'throw an [AssertionError]': (test) ->
+      fn = -> expect(true).to.equal false
+      method = new BDD.Method(fn)
+      fn = -> BDD.Method.run(method, throw:true, (e) -> err = e)
+      expect(fn).to.throw()
+
 
 
 Test.run 'Method.run (Asynchronous Class Method)',

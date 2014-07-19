@@ -100,6 +100,12 @@ BDD.Method.run = (method, options = {}, done) ->
     done?(null)
     return
 
+  onError = (err) ->
+      if options.throw is true
+        throw err
+      else
+        done?(err)
+
   # Run the method.
   if method.isAsync
     # Start timeout.
@@ -114,7 +120,7 @@ BDD.Method.run = (method, options = {}, done) ->
           timer.stop()
           done?(null)
     catch e
-      done?(e)
+      onError(e)
 
   else
     # Invoke synchronously.
@@ -122,7 +128,7 @@ BDD.Method.run = (method, options = {}, done) ->
       method.func.call(context)
       done?(null)
     catch e
-      done?(e)
+      onError(e)
 
 
 
