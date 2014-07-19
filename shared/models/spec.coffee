@@ -55,7 +55,7 @@ class BDD.Spec extends BDD.Method
             result.flatten()
 
     beforeEachHandlers = getHandlers('beforeEach', parentSuite)
-    afterEachHandlers = getHandlers('afterEach', parentSuite).reverse()
+    afterEachHandlers  = getHandlers('afterEach', parentSuite).reverse()
 
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
     runHandlers 'beforeEach', beforeEachHandlers, =>
