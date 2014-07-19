@@ -31,7 +31,7 @@ Test.run 'Spec.run (beforeEach | afterEach)',
                 afterEach -> push('afterEach', @)
 
       context = { foo:123 }
-      suite.specs()[0].run(context)
+      suite.specs()[0].run(this:context)
 
       expect(items[0].key).to.equal 'beforeEach'
       expect(items[0].context).to.equal context

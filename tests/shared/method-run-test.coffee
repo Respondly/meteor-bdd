@@ -1,24 +1,3 @@
-# Test.run 'run order',
-#   setup: ->
-#   tearDown: ->
-#   tests:
-#     'it runs suite: before => specs => after': (test) ->
-
-#       console.error 'TODO - run order for suite'
-
-#       suite = describe 'suite', ->
-#                 before ->
-#                 beforeEach ->
-
-#                 it 'one', ->
-#                 it 'two', ->
-
-#                 afterEach ->
-#                 after ->
-
-
-
-
 Test.run 'method.run (instance)',
   tearDown: -> BDD.reset()
   tests:
@@ -60,7 +39,7 @@ Test.run 'Method.run (Synchronous Class Method)',
       self = undefined
       fn = -> self = @
       method = new BDD.Method(fn)
-      BDD.Method.run(method, { foo:123 })
+      BDD.Method.run(method, this:{ foo:123 })
       expect(self.foo).to.equal 123
 
     'returns an [AssertionError]': (test) ->
@@ -95,7 +74,7 @@ Test.run 'Method.run (Asynchronous Class Method)',
               self = @
               Util.delay(20, done)
       method = new BDD.Method(fn)
-      runAsync = (callback) -> BDD.Method.run(method, { foo:123 }, callback)
+      runAsync = (callback) -> BDD.Method.run(method, this:{ foo:123 }, callback)
       runAsync done ->
             expect(self.foo).to.equal 123
 
@@ -143,7 +122,7 @@ Test.run 'Method.runMany (Method)',
         )
       methods = [method1, method2]
 
-      BDD.Method.runMany methods, {foo:123}, (r) ->
+      BDD.Method.runMany methods, this:{foo:123}, (r) ->
           doneCount += 1
           result = r
 
@@ -185,7 +164,7 @@ Test.run 'Method.runMany (Method)',
       methods = [method1, method2]
 
       runAsync = (callback) ->
-          BDD.Method.runMany methods, {foo:123}, (result) ->
+          BDD.Method.runMany methods, this:{foo:123}, (result) ->
               callback()
       runAsync done ->
           expect(methodCount1).to.equal 1

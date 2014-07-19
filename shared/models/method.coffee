@@ -20,11 +20,14 @@ class BDD.Method
 
   ###
   Invokes the test function.
-  @param context:     The context within which to run (or null).
+  @param options:     (Optional)
+                         - this:    The [this] context to run the method with.
+                         - throw:   Flag indicating if errors should be thrown.
+                                    Default:false
   @param done(err):   (Optional) A callback to invoke upon completion.
                                  An error if one occured (including timeout).
   ###
-  run: (context, done) -> BDD.Method.run(@, context, done)
+  run: (options, done) -> BDD.Method.run(@, options, done)
 
 
 
@@ -34,14 +37,17 @@ class BDD.Method
 
 ###
 Invokes a collection of methods.
-@param context:         The context within which to run (or null).
 @param methods:         The set of Method objects.
+@param options:         (Optional)
+                         - this:    The [this] context to run the method with.
+                         - throw:   Flag indicating if errors should be thrown.
+                                    Default:false
 @param done(result):    A callback to invoke upon completion.
                         The result is an object:
                           - errors: An array of errors that occured.
 
 ###
-BDD.Method.runMany = (methods, context, done) ->
+BDD.Method.runMany = (methods, options, done) ->
   # Setup initial conditions.
   methods = [] unless Object.isArray(methods)
   completedCount = 0
@@ -63,7 +69,7 @@ BDD.Method.runMany = (methods, context, done) ->
 
   for method in methods
     do (method) ->
-      BDD.Method.run(method, context, (err) -> onMethodCallback(method, err))
+      BDD.Method.run(method, options, (err) -> onMethodCallback(method, err))
 
 
 
@@ -71,22 +77,30 @@ BDD.Method.runMany = (methods, context, done) ->
 
 ###
 Invokes a set of methods.
-@param method:      The Method object.
-@param context:     The context within which to run (or null).
-@param done(err):   A callback to invoke upon completion.
-                      err: An error if one occured (including timeout).
+@param method:          The [Method] object.
+@param options:         (Optional)
+                          - this:    The [this] context to run the method with.
+                          - throw:   Flag indicating if errors should be thrown.
+                                     Default:false
+@param done(err):       A callback to invoke upon completion.
+                          - err: An error if one occured (including timeout).
 ###
-BDD.Method.run = (method, context, done) ->
+BDD.Method.run = (method, options = {}, done) ->
   # Setup initial conditions.
+  if Object.isFunction(options)
+    done = options
+    options = {}
+  context = options.this
   context ?= method
   if not (method instanceof BDD.Method)
     throw new Error('Not a [Method] object')
 
+  # Ensure the method is executable.
   if not Object.isFunction(method.func)
     done?(null)
     return
 
-
+  # Run the method.
   if method.isAsync
     # Start timeout.
     timer = Util.delay method.timeout, =>
@@ -100,7 +114,6 @@ BDD.Method.run = (method, context, done) ->
           timer.stop()
           done?(null)
     catch e
-      console?.error(e)
       done?(e)
 
   else
@@ -109,7 +122,6 @@ BDD.Method.run = (method, context, done) ->
       method.func.call(context)
       done?(null)
     catch e
-      console?.error(e)
       done?(e)
 
 

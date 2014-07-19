@@ -23,17 +23,20 @@ class BDD.Spec extends BDD.Method
 
   ###
   Invokes the test function.
-  @param context:     The context within which to run (or null).
+  @param options:     (Optional)
+                         - this:    The [this] context to run the method with.
+                         - throw:   Flag indicating if errors should be thrown.
+                                    Default:false
   @param done(err):   (Optional) A callback to invoke upon completion.
                                  An error if one occured (including timeout).
   ###
-  run: (context, done) ->
+  run: (options, done) ->
     # Setup initial conditions.
     parentSuite = @parent
 
     runHandlers = (action, methods, next) ->
         if Object.isArray(methods)
-          BDD.Method.runMany methods, context, (result) ->
+          BDD.Method.runMany methods, options, (result) ->
             if result.hasError
               # Invoke overall callback without continuing.
               err = new Error("#{action} resulted in error")
@@ -59,7 +62,7 @@ class BDD.Spec extends BDD.Method
 
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
     runHandlers 'beforeEach', beforeEachHandlers, =>
-      BDD.Method.run @, context, (err) =>
+      BDD.Method.run @, options, (err) =>
           if err?
             done?(err) # Failed on spec, don't continue.
           else
