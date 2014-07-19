@@ -18,46 +18,58 @@ Test.run 'Spec (class)',
       expect(spec.id).to.equal Util.hash('does something')
 
 
+
 Test.run 'Spec.run (beforeEach | afterEach)',
   tearDown: -> BDD.reset()
   tests:
-    'runs the beforeEach/afterEach methods around a spec': (test) ->
-      beforeEachCount = 0
-      specCount = 0
-      afterEachCount = 0
-      beforeEachContext = null
-      specContext = null
-      afterEachContext = null
+    'runs the beforeEach/afterAfter methods around a spec': (test) ->
+      items = []
+      push = (key, context) -> items.push({ key:key, context:context})
+      suite = describe 'my suite', ->
+                beforeEach -> push('beforeEach', @)
+                it 'spec', -> push('spec', @)
+                afterEach -> push('afterEach', @)
 
-      suite = new BDD.Suite('My suite')
-      spec = new BDD.Spec 'My spec', ->
-          specCount += 1
-          specContext = @
-      suite.add(spec)
+      context = { foo:123 }
+      suite.specs()[0].run(context)
 
-      # NB: Adds multiple handlers. This is an edge-case.
-      suite.beforeEach.push new BDD.Method(->
-        beforeEachCount += 1
-        beforeEachContext = @
-        )
-      suite.beforeEach.push new BDD.Method(-> beforeEachCount += 1)
-      suite.beforeEach.push new BDD.Method(-> beforeEachCount += 1)
+      expect(items[0].key).to.equal 'beforeEach'
+      expect(items[0].context).to.equal context
+      expect(items[1].key).to.equal 'spec'
+      expect(items[1].context).to.equal context
+      expect(items[2].key).to.equal 'afterEach'
+      expect(items[2].context).to.equal context
 
-      suite.afterEach.push new BDD.Method(-> afterEachCount += 1)
-      suite.afterEach.push new BDD.Method(->
-        afterEachCount += 1
-        afterEachContext = @
-        )
 
-      spec.run({foo:123})
 
-      expect(beforeEachCount).to.equal 3
-      expect(specCount).to.equal 1
-      expect(afterEachCount).to.equal 2
+    'runs beforeEach/afterAfter methods in parent suite': (test) ->
+      items = []
+      gradeParentSuite = describe 'grand-parent', ->
+                          beforeEach -> items.push('grand-parent:beforeEach')
+                          describe 'parent', ->
+                            beforeEach -> items.push('parent:beforeEach')
+                            describe 'child', ->
+                                  beforeEach -> items.push('child:beforeEach')
+                                  it 'spec', -> items.push('child:spec')
+                                  afterEach -> items.push('child:afterEach')
+                            afterEach -> items.push('parent:afterEach')
+                          afterEach -> items.push('grand-parent:afterEach')
 
-      expect(beforeEachContext).to.eql {foo:123}
-      expect(specContext).to.eql {foo:123}
-      expect(afterEachContext).to.eql {foo:123}
+      parentSuite = gradeParentSuite.children()[0]
+      childSuite = parentSuite.children()[0]
+      spec = childSuite.specs()[0]
+
+      spec.run()
+
+      expect(items[0]).to.equal 'grand-parent:beforeEach'
+      expect(items[1]).to.equal 'parent:beforeEach'
+      expect(items[2]).to.equal 'child:beforeEach'
+      expect(items[3]).to.equal 'child:spec'
+      expect(items[4]).to.equal 'child:afterEach'
+      expect(items[5]).to.equal 'parent:afterEach'
+      expect(items[6]).to.equal 'grand-parent:afterEach'
+
+
 
 
 

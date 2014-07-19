@@ -44,13 +44,26 @@ class BDD.Spec extends BDD.Method
         else
           next() # No methods.
 
+    # Walk up the hierarchy of suites building the list of
+    # before/after methods for the spec.
+    getHandlers = (key, suite) ->
+            result = []
+            if suite?
+              if parent = suite.parent
+                result.push getHandlers(key, parent)
+              result.push(suite[key])
+            result.flatten()
+
+    beforeEachHandlers = getHandlers('beforeEach', parentSuite)
+    afterEachHandlers = getHandlers('afterEach', parentSuite).reverse()
+
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
-    runHandlers 'beforeEach', parentSuite?.beforeEach, =>
+    runHandlers 'beforeEach', beforeEachHandlers, =>
       BDD.Method.run @, context, (err) =>
           if err?
             done?(err) # Failed on spec, don't continue.
           else
-            runHandlers 'afterEach', parentSuite?.afterEach, => done?(null)
+            runHandlers 'afterEach', afterEachHandlers, => done?(null)
 
 
 
