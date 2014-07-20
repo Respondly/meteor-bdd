@@ -2,6 +2,14 @@
 Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` statements.
 
 
+
+# TODO
+- change suite getBefore... to before (swap out arrays)
+- Move BDD.Method.run/runMany to BDD
+
+
+
+
 # Installation
 When running for the first time:
 
