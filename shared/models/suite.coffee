@@ -61,20 +61,38 @@ class BDD.Suite
 
 
 
+  ###
+  Retrieves the set of [beforeEach] handlers for the entire suite heirarchy.
+  ###
+  getBeforeEach: -> getHandlers(@, 'beforeEach')
 
 
-# ----------------------------------------------------------------------
+  ###
+  Retrieves the set of [afterEach] handlers for the entire suite heirarchy.
+  ###
+  getAfterEach: -> getHandlers(@, 'afterEach').reverse()
+
+
+
+# PRIVATE ----------------------------------------------------------------------
+
+
+getHandlers = (suite, key) ->
+        result = []
+        if suite?
+          if parent = suite.parent
+            result.push getHandlers(parent, key)
+          result.push(suite[key])
+        result.flatten()
+
+
+# CLASS METHODS ----------------------------------------------------------------------
 
 
 
 ###
 Resets the set of suites.
 ###
-BDD.reset = ->
-  BDD.suite = new BDD.Suite('root')
+BDD.reset = -> BDD.suite = new BDD.Suite('root')
+BDD.reset() # Init.
 
-
-
-# INITIALIZE ----------------------------------------------------------------------
-
-BDD.reset()
