@@ -5,8 +5,6 @@ Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` st
 
 # TODO
 - change suite getBefore... to before (swap out arrays)
-- Move BDD.Method.run/runMany to BDD
-- Test for [runMany] when empty array passed.  Should run callback.
 
 
 
