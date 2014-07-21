@@ -17,7 +17,7 @@ Test.run 'Suite (class)',
 
     'has a root [Suite] instance on the BDD namespace': (test) ->
       expect(BDD.suite).to.be.an.instanceOf BDD.Suite
-      expect(BDD.suite.name).to.equal 'root'
+      expect(BDD.suite.parent?).to.equal false
 
     'adds a child suite': (test) ->
       childSuite = new BDD.Suite('child')

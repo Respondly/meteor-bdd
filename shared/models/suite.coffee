@@ -112,6 +112,6 @@ getHandlersDeep = (suite, key) ->
 ###
 Resets the set of suites.
 ###
-BDD.reset = -> BDD.suite = new BDD.Suite('root')
+BDD.reset = -> BDD.suite = new BDD.Suite()
 BDD.reset() # Init.
 
