@@ -36,7 +36,7 @@ class BDD.Spec extends BDD.Method
 
     runHandlers = (action, methods, next) ->
         if Object.isArray(methods)
-          BDD.Method.runMany methods, options, (result) ->
+          BDD.runMany methods, options, (result) ->
             if result.hasError
               # Invoke overall callback without continuing.
               err = new Error("#{action} resulted in error")
@@ -54,7 +54,7 @@ class BDD.Spec extends BDD.Method
 
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
     runHandlers 'beforeEach', beforeEachHandlers, =>
-      BDD.Method.run @, options, (err) =>
+      BDD.run @, options, (err) =>
           if err?
             done?(err) # Failed on spec, don't continue.
           else

@@ -27,7 +27,7 @@ class BDD.Method
   @param done(err):   (Optional) A callback to invoke upon completion.
                                  An error if one occured (including timeout).
   ###
-  run: (options, done) -> BDD.Method.run(@, options, done)
+  run: (options, done) -> BDD.run(@, options, done)
 
 
 
@@ -47,12 +47,11 @@ Invokes a collection of methods.
                           - errors: An array of errors that occured.
 
 ###
-BDD.Method.runMany = (methods, options, done) ->
+BDD.runMany = (methods, options, done) ->
   # Setup initial conditions.
   methods = [] unless Object.isArray(methods)
   completedCount = 0
-  result =
-    errors:[]
+  result = { errors:[] }
 
   onCompleted = ->
         done?(result)
@@ -71,7 +70,7 @@ BDD.Method.runMany = (methods, options, done) ->
 
   for method in methods
     do (method) ->
-      BDD.Method.run(method, options, (err) -> onMethodCallback(method, err))
+      BDD.run(method, options, (err) -> onMethodCallback(method, err))
 
 
 
@@ -87,7 +86,7 @@ Invokes a set of methods.
 @param done(err):       A callback to invoke upon completion.
                           - err: An error if one occured (including timeout).
 ###
-BDD.Method.run = (method, options = {}, done) ->
+BDD.run = (method, options = {}, done) ->
   # Setup initial conditions.
   if Object.isFunction(options)
     done = options

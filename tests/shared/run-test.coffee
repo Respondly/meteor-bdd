@@ -3,8 +3,8 @@ Test.run 'method.run (instance)',
   tests:
     '[runs] the instnace method through the class method': (test) ->
       count = 0
-      fnOriginal = BDD.Method.run
-      BDD.Method.run = (m, c, done) ->
+      fnOriginal = BDD.run
+      BDD.run = (m, c, done) ->
           count += 1
           expect(m).to.equal method
           expect(c).to.eql { foo:123 }
@@ -15,11 +15,11 @@ Test.run 'method.run (instance)',
       method.run({ foo:123 }, callback)
       expect(count).to.equal 1
 
-      BDD.Method.run = fnOriginal
+      BDD.run = fnOriginal
 
 
 
-Test.run 'Method.run (Synchronous Class Method)',
+Test.run 'BDD.run (Synchronous Class Method)',
   tearDown: -> BDD.reset()
   tests:
     'runs a single method with the [Method] as the context': (test) ->
@@ -30,7 +30,7 @@ Test.run 'Method.run (Synchronous Class Method)',
           count += 1
           self = @
       method = new BDD.Method(fn)
-      BDD.Method.run(method, null, (e) -> err = e)
+      BDD.run(method, null, (e) -> err = e)
       expect(count).to.equal 1
       expect(self).to.equal method
       expect(err).to.equal null
@@ -39,25 +39,25 @@ Test.run 'Method.run (Synchronous Class Method)',
       self = undefined
       fn = -> self = @
       method = new BDD.Method(fn)
-      BDD.Method.run(method, this:{ foo:123 })
+      BDD.run(method, this:{ foo:123 })
       expect(self.foo).to.equal 123
 
     'returns an [AssertionError]': (test) ->
       fn = -> expect(true).to.equal false
       method = new BDD.Method(fn)
       err = undefined
-      BDD.Method.run(method, null, (e) -> err = e)
+      BDD.run(method, null, (e) -> err = e)
       expect(err).to.be.an.instanceOf chai.AssertionError
 
     'throw an [AssertionError]': (test) ->
       fn = -> expect(true).to.equal false
       method = new BDD.Method(fn)
-      fn = -> BDD.Method.run(method, throw:true, (e) -> err = e)
+      fn = -> BDD.run(method, throw:true, (e) -> err = e)
       expect(fn).to.throw()
 
 
 
-Test.run 'Method.run (Asynchronous Class Method)',
+Test.run 'BDD.run (Asynchronous Class Method)',
   tearDown: -> BDD.reset()
   tests:
     '[runs] the method function with no context': (test, done) ->
@@ -68,7 +68,7 @@ Test.run 'Method.run (Asynchronous Class Method)',
               self = @
               Util.delay(20, done)
       method = new BDD.Method(fn)
-      runAsync = (callback) -> BDD.Method.run(method, null, callback)
+      runAsync = (callback) -> BDD.run(method, null, callback)
       runAsync done ->
             expect(count).to.equal 1
             expect(self).to.equal method
@@ -80,7 +80,7 @@ Test.run 'Method.run (Asynchronous Class Method)',
               self = @
               Util.delay(20, done)
       method = new BDD.Method(fn)
-      runAsync = (callback) -> BDD.Method.run(method, this:{ foo:123 }, callback)
+      runAsync = (callback) -> BDD.run(method, this:{ foo:123 }, callback)
       runAsync done ->
             expect(self.foo).to.equal 123
 
@@ -91,7 +91,7 @@ Test.run 'Method.run (Asynchronous Class Method)',
       method.timeout = 200
       err = null
       runAsync = (callback) ->
-          BDD.Method.run method, null, (e) ->
+          BDD.run method, null, (e) ->
               err = e
               callback()
       runAsync done ->
@@ -103,7 +103,7 @@ Test.run 'Method.run (Asynchronous Class Method)',
       method = new BDD.Method(fn)
       err = null
       runAsync = (callback) ->
-          BDD.Method.run method, null, (e) ->
+          BDD.run method, null, (e) ->
               err = e
               callback()
       runAsync done ->
@@ -111,13 +111,13 @@ Test.run 'Method.run (Asynchronous Class Method)',
 
 
 
-Test.run 'Method.runMany (Method)',
+Test.run 'BDD.runMany (Method)',
   tearDown: -> BDD.reset()
   tests:
     'invokes callback when empty no methods are passed': (test) ->
       count = 0
-      BDD.Method.runMany [], null, -> count += 1
-      BDD.Method.runMany null, null, -> count += 1
+      BDD.runMany [], null, -> count += 1
+      BDD.runMany null, null, -> count += 1
       expect(count).to.equal 2
 
 
@@ -135,7 +135,7 @@ Test.run 'Method.runMany (Method)',
         )
       methods = [method1, method2]
 
-      BDD.Method.runMany methods, this:{foo:123}, (r) ->
+      BDD.runMany methods, this:{foo:123}, (r) ->
           doneCount += 1
           result = r
 
@@ -153,7 +153,7 @@ Test.run 'Method.runMany (Method)',
       methods = [method1, method2, method3]
       result = null
 
-      BDD.Method.runMany methods, null, (r) -> result = r
+      BDD.runMany methods, null, (r) -> result = r
 
       expect(result.errors.length).to.equal 2
       expect(result.hasError).to.equal true
@@ -177,7 +177,7 @@ Test.run 'Method.runMany (Method)',
       methods = [method1, method2]
 
       runAsync = (callback) ->
-          BDD.Method.runMany methods, this:{foo:123}, (result) ->
+          BDD.runMany methods, this:{foo:123}, (result) ->
               callback()
       runAsync done ->
           expect(methodCount1).to.equal 1
