@@ -58,6 +58,8 @@ BDD.Method.runMany = (methods, options, done) ->
         done?(result)
         done = null # Prevent any further callbacks (edge-case).
 
+  return onCompleted() if methods.length is 0
+
   onMethodCallback = (method, err) ->
         completedCount += 1
         if err?

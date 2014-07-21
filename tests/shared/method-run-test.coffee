@@ -114,6 +114,13 @@ Test.run 'Method.run (Asynchronous Class Method)',
 Test.run 'Method.runMany (Method)',
   tearDown: -> BDD.reset()
   tests:
+    'invokes callback when empty no methods are passed': (test) ->
+      count = 0
+      BDD.Method.runMany [], null, -> count += 1
+      BDD.Method.runMany null, null, -> count += 1
+      expect(count).to.equal 2
+
+
     'runs multiple methods with no errors (Synchronous)': (test) ->
       context = null
       methodCount1 = 0

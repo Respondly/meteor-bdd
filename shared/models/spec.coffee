@@ -49,8 +49,8 @@ class BDD.Spec extends BDD.Method
 
     # Retrieve the [beforeEach / afterEach] handlers for the
     # the entire suite hierarchy.
-    beforeEachHandlers = parentSuite.getBeforeEach()
-    afterEachHandlers = parentSuite.getAfterEach()
+    beforeEachHandlers = parentSuite.getBeforeEach(true)
+    afterEachHandlers = parentSuite.getAfterEach(true)
 
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
     runHandlers 'beforeEach', beforeEachHandlers, =>

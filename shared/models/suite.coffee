@@ -99,7 +99,7 @@ getHandlersDeep = (suite, key) ->
         result = []
         if suite?
           if parent = suite.parent
-            result.push getHandlers(parent, key)
+            result.push getHandlersDeep(parent, key)
           result.push(suite[key])
         result.flatten()
 
