@@ -20,7 +20,7 @@ class BDD.Suite
   Destroyes the Suite.
   ###
   dispose: ->
-    child.dispose() for child in @children()
+    child.dispose() for child in @suites()
     @isDisposed = true
 
 
@@ -47,7 +47,7 @@ class BDD.Suite
   ###
   Retrieves the array of child Suites.
   ###
-  children: -> @items.filter (item) -> item instanceof BDD.Suite
+  suites: -> @items.filter (item) -> item instanceof BDD.Suite
 
 
   ###

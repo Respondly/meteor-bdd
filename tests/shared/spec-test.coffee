@@ -68,8 +68,8 @@ Test.run 'Spec.run (beforeEach | afterEach)',
                             afterEach -> items.push('parent:afterEach')
                           afterEach -> items.push('grand-parent:afterEach')
 
-      parentSuite = gradeParentSuite.children()[0]
-      childSuite = parentSuite.children()[0]
+      parentSuite = gradeParentSuite.suites()[0]
+      childSuite = parentSuite.suites()[0]
       spec = childSuite.specs()[0]
 
       spec.run()
