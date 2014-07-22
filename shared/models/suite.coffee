@@ -79,6 +79,22 @@ class BDD.Suite
     return value
 
 
+
+  ###
+  Searches the suite for any matching child-suites or specs.
+  @param query:
+            - uid: The unique ID of the suite/spec to find.
+  @returns array [Suite | Spec]
+  ###
+  find: (query = {}) ->
+    result = []
+    if uid = query.uid
+      return result
+
+    else
+      [] # No matches.
+
+
   ###
   Retrieves the set of [before] handlers for the entire suite heirarchy.
   ###
