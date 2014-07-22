@@ -26,6 +26,25 @@ class BDD.Suite
 
 
   ###
+  Creates a string representation of the Suite.
+  ###
+  toString: ->
+    items = []
+    walk = (suite) ->
+        items.push(suite.name ? 'root')
+        walk(suite.parent) if suite.parent?
+    walk(@)
+    "[SUITE:#{ items.reverse().join('::') }]"
+
+
+  ###
+  The unique ID of the Suite.
+  ###
+  uid: -> "#{ Util.hash(@toString()) }"
+
+
+
+  ###
   Retrieves the array of child Suites.
   ###
   children: -> @items.filter (item) -> item instanceof BDD.Suite

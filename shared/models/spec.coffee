@@ -16,9 +16,24 @@ class BDD.Spec extends BDD.Method
   ###
   constructor: (@name, @func) ->
     super @func
-    @id = Util.hash(@name) if Object.isString(@name)
+    # @id = Util.hash(@name).toString() if Object.isString(@name)
     @parent = null # The parent Suite.
 
+
+  ###
+  Creates a string representation of the Spec.
+  ###
+  toString: ->
+    result = "[SPEC:#{ @name ? 'Unnamed' }]"
+    if @parent?
+      result = "#{ @parent.toString() }->#{ result }"
+    result
+
+
+  ###
+  The unique ID of the Spec within the suite.
+  ###
+  uid: -> "#{ Util.hash(@toString()) }"
 
 
   ###

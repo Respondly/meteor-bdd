@@ -2,6 +2,7 @@ suite = null
 
 Test.run 'Suite (class)',
   setup: -> suite = new BDD.Suite('foo')
+  tearDown: -> BDD.reset()
   tests:
     'has default values upon construction': (test) ->
       expect(suite.name).to.equal 'foo'
@@ -12,8 +13,11 @@ Test.run 'Suite (class)',
       expect(suite.after).to.eql []
       expect(suite.afterEach).to.eql []
 
-    'has a unique ID as a hash of the name/description': (test) ->
-      expect(suite.id).to.equal Util.hash('foo')
+    'has a unique ID [uid] as a hash of the [toString] value': (test) ->
+      suite = describe 'my-suite', ->
+        describe 'my-child', ->
+      suite = suite.children()[0]
+      expect(suite.uid()).to.equal "#{ Util.hash(suite.toString()) }"
 
     'has a root [Suite] instance on the BDD namespace': (test) ->
       expect(BDD.suite).to.be.an.instanceOf BDD.Suite
@@ -35,6 +39,7 @@ Test.run 'Suite (class)',
       expect(suite.specs()).to.eql [spec]
       expect(suite.items).to.eql [spec]
 
+
     'disposes of a suite': (test) ->
       parent = new BDD.Suite('parent')
       child = new BDD.Suite('child')
@@ -46,5 +51,22 @@ Test.run 'Suite (class)',
 
       expectDisposed(parent)
       expectDisposed(child)
+
+
+
+
+Test.run 'Suite.toString()',
+  tearDown: -> BDD.reset()
+  tests:
+    'returns [toString] for a root suite': (test) ->
+      suite = new BDD.Suite('foo')
+      expect(suite.toString()).to.equal '[SUITE:foo]'
+
+
+    'returns the full hierarchy in the [toString] method': (test) ->
+      suite = describe 'my-suite', ->
+        describe 'my-child', ->
+      suite = suite.children()[0]
+      expect(suite.toString()).to.equal '[SUITE:root::my-suite::my-child]'
 
 

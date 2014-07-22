@@ -13,9 +13,22 @@ Test.run 'Spec (class)',
       expect(method.func).to.equal fn
 
 
-    'has a unique ID as a hash of the name/description': (test) ->
+    '[toString] returns just the spec with no parent': (test) ->
       spec = new BDD.Spec('does something', ->)
-      expect(spec.id).to.equal Util.hash('does something')
+      expect(spec.toString()).to.equal '[SPEC:does something]'
+
+
+    '[toString] returns the complete hierarchy ': (test) ->
+      suite = describe 'foo', ->
+        it 'spec', ->
+      spec = suite.specs()[0]
+      expect(spec.toString()).to.equal '[SUITE:root::foo]->[SPEC:spec]'
+
+
+    'has a unique ID [uid] as a hash of the [toString] value': (test) ->
+      spec = new BDD.Spec('does something', ->)
+      expect(spec.uid()).to.equal "#{ Util.hash(spec.toString()) }"
+
 
 
 
