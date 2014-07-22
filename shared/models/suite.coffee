@@ -89,10 +89,18 @@ class BDD.Suite
   find: (query = {}) ->
     result = []
     if uid = query.uid
-      return result
+      return [ findByUid(uid, @) ].compact()
 
     else
       [] # No matches.
+
+
+  ###
+  Returns the first item of a search.
+  @param query: See "find" method.
+  @returns a single object, or null
+  ###
+  findOne: (query) -> @find(query)[0] ? null
 
 
   ###
@@ -119,6 +127,16 @@ class BDD.Suite
 
 
 # PRIVATE ----------------------------------------------------------------------
+
+
+
+findByUid = (uid, suite) ->
+  if suite
+    for item in suite.items
+      return item if item.uid() is uid
+      if (item instanceof BDD.Suite)
+        if resultFromChild = findByUid(uid, item) # <== RECURSION.
+          return resultFromChild
 
 
 
