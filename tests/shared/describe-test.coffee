@@ -52,6 +52,37 @@ Test.run '[describe] statement',
       expect(parent.suites().length).to.equal 2
 
 
+    'adds to the same existing Suite': (test) ->
+      suite1 = describe 'my suite', ->
+        it 'foo-1', ->
+
+      suite2 = describe 'my suite', ->
+        it 'foo-2', ->
+
+      suite3 = describe 'something else', ->
+
+      root = BDD.suite
+      expect(root.suites().length).to.equal 2
+      expect(suite1).to.equal suite2
+      expect(root.suites()[0].specs()[0].name).to.equal 'foo-1'
+      expect(root.suites()[0].specs()[1].name).to.equal 'foo-2'
+
+
+    'adds multiple identically named specs to the same existing Suite': (test) ->
+      suite1 = describe 'my suite', ->
+        it 'foo', ->
+
+      suite2 = describe 'my suite', ->
+        it 'foo', ->
+
+      root = BDD.suite
+      expect(root.suites().length).to.equal 1
+      expect(root.suites()[0]).to.equal suite1
+      expect(suite1.specs().length).to.equal 2
+      expect(suite1.specs()[0].name).to.equal 'foo'
+      expect(suite1.specs()[1].name).to.equal 'foo'
+
+
 
 # ----------------------------------------------------------------------
 

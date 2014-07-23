@@ -21,13 +21,19 @@ describe = BDD.describe = (name, func) ->
   startingSuite = _currentSuite ?= BDD.suite
   name = 'Untitled' if Util.isBlank(name)
 
-  # Create the new suite.
-  suite = _currentSuite.add(new BDD.Suite(name))
+  # Get the Suite.
+  uid = BDD.Suite.toUid(name, _currentSuite)
+  if existingSuite = BDD.suite.findOne(uid:uid)
+    # An existing suite with this name/hierarchy already exists
+    # Append to this suite.
+    suite = existingSuite
+  else
+    # Create the new suite.
+    suite = _currentSuite.add(new BDD.Suite(name))
   _currentSuite = suite
 
   # Configure the suite.
-  if Object.isFunction(func)
-    func()
+  func() if Object.isFunction(func)
 
   # Finish up.
   result = _currentSuite
