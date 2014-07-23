@@ -1,6 +1,26 @@
 suite = null
 
-Test.run 'Suite (class)',
+
+Test.run 'Suite (Class Methods)',
+  tearDown: -> BDD.reset()
+  tests:
+    'returns [toString] for a root suite': (test) ->
+      expect(BDD.Suite.toString('foo')).to.equal '[SUITE:foo]'
+
+
+    'returns the full hierarchy in the [toString] method': (test) ->
+      suite = describe 'my-suite', ->
+      expect(BDD.Suite.toString('foo', suite)).to.equal '[SUITE:root::my-suite::foo]'
+
+
+    'returns a UID': (test) ->
+      expect(BDD.Suite.toUid('foo', BDD.suite)).to.equal "#{ Util.hash('[SUITE:root::foo]') }"
+
+
+
+
+
+Test.run 'Suite (instance)',
   setup: -> suite = new BDD.Suite('foo')
   tearDown: -> BDD.reset()
   tests:
@@ -55,7 +75,9 @@ Test.run 'Suite (class)',
 
 
 
-Test.run 'Suite.toString()',
+
+
+Test.run 'suite.toString()',
   tearDown: -> BDD.reset()
   tests:
     'returns [toString] for a root suite': (test) ->

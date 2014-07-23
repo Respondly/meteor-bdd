@@ -1,10 +1,10 @@
 ###
 Represents a suite of specs.
 ###
-class BDD.Suite
+Suite = class BDD.Suite
   ###
   Constructor.
-  @param name: The name/description of the suite.
+  @param name:    The name/description of the suite.
   ###
   constructor: (@name) ->
     @parent     = null
@@ -13,7 +13,6 @@ class BDD.Suite
     @beforeEach = []
     @after      = []
     @afterEach  = []
-    @id = Util.hash(@name) if Object.isString(@name)
 
 
   ###
@@ -28,19 +27,13 @@ class BDD.Suite
   ###
   Creates a string representation of the Suite.
   ###
-  toString: ->
-    items = []
-    walk = (suite) ->
-        items.push(suite.name ? 'root')
-        walk(suite.parent) if suite.parent?
-    walk(@)
-    "[SUITE:#{ items.reverse().join('::') }]"
+  toString: -> Suite.toString(@name, @parent)
 
 
   ###
   The unique ID of the Suite.
   ###
-  uid: -> "#{ Util.hash(@toString()) }"
+  uid: -> Suite.toUid(@name, @parent)
 
 
 
@@ -161,10 +154,39 @@ getHandlersDeep = (suite, key) ->
 # CLASS METHODS ----------------------------------------------------------------------
 
 
+###
+Generates the unique ID of the suite.
+@param name:   The name/description of the suite.
+@param parent: (Optional) The parent Suite
+###
+Suite.toUid = (name, parent) -> "#{ Util.hash(Suite.toString(name, parent)) }"
+
+
+
+
+###
+Generates a deep string representation of the Suite.
+@param name:   The name/description of the suite.
+@param parent: (Optional) The parent Suite
+###
+Suite.toString = (name, parent) ->
+    items = [name ? 'root']
+    walk = (suite) ->
+        if suite
+          items.push(suite.name ? 'root')
+          walk(suite.parent) if suite.parent?
+    walk(parent)
+    "[SUITE:#{ items.reverse().join('::') }]"
+
+
+
+# ----------------------------------------------------------------------
+
 
 ###
 Resets the set of suites.
 ###
 BDD.reset = -> BDD.suite = new BDD.Suite()
 BDD.reset() # Init.
+
 
