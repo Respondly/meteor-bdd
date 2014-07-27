@@ -10,7 +10,7 @@ Package.on_use(function (api) {
   api.export('BDD');
   api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
 
-  // Generated with: github.com/philcockfield/meteor-package-loader
+  // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('shared/api.coffee', ['client', 'server']);
   api.add_files('shared/models/method.coffee', ['client', 'server']);
   api.add_files('shared/models/spec.coffee', ['client', 'server']);
@@ -25,7 +25,7 @@ Package.on_test(function (api) {
   api.use(['munit', 'coffeescript', 'chai']);
   api.use(['bdd', 'util']);
 
-  // Generated with: github.com/philcockfield/meteor-package-loader
+  // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('tests/shared/_init.coffee', ['client', 'server']);
   api.add_files('tests/shared/describe-test.coffee', ['client', 'server']);
   api.add_files('tests/shared/find-test.coffee', ['client', 'server']);
