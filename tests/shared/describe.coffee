@@ -1,7 +1,7 @@
 Test.run '[describe] statement',
   tearDown: -> BDD.reset()
   tests:
-    'does not fail if not function is specified': (test) ->
+    'does not fail if no function is specified': (test) ->
       describe 'foo'
 
 
