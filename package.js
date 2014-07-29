@@ -27,11 +27,12 @@ Package.on_test(function (api) {
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('tests/shared/_init.coffee', ['client', 'server']);
-  api.add_files('tests/shared/describe-test.coffee', ['client', 'server']);
-  api.add_files('tests/shared/find-test.coffee', ['client', 'server']);
-  api.add_files('tests/shared/method-test.coffee', ['client', 'server']);
-  api.add_files('tests/shared/run-test.coffee', ['client', 'server']);
-  api.add_files('tests/shared/spec-test.coffee', ['client', 'server']);
-  api.add_files('tests/shared/suite-test.coffee', ['client', 'server']);
+  api.add_files('tests/shared/describe.coffee', ['client', 'server']);
+  api.add_files('tests/shared/find.coffee', ['client', 'server']);
+  api.add_files('tests/shared/method.coffee', ['client', 'server']);
+  api.add_files('tests/shared/run.coffee', ['client', 'server']);
+  api.add_files('tests/shared/spec.coffee', ['client', 'server']);
+  api.add_files('tests/shared/suite-section.coffee', ['client', 'server']);
+  api.add_files('tests/shared/suite.coffee', ['client', 'server']);
 
 });
