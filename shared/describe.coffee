@@ -41,6 +41,22 @@ describe = BDD.describe = (name, func) ->
   result
 
 
+
+###
+Declares a child Suite as a "section".
+NOTE: This is used for display purposes in some test runners.
+
+@param name: The name/description of the suite.
+@param func: The suite function.
+
+@returns the resulting [Suite] object.
+###
+describe.section = (name, func) ->
+  suite = describe(name, func)
+  suite.isSection = true
+  suite
+
+
 # ----------------------------------------------------------------------
 
 

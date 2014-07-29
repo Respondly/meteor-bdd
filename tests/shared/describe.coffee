@@ -199,6 +199,23 @@ Test.run '[afterEach] statement',
 
 
 
+# ----------------------------------------------------------------------
+
+
+Test.run 'describe.section',
+  tearDown: -> BDD.reset()
+  tests:
+    'declares the suite as a "section"': (test) ->
+      root = describe 'root', ->
+              describe.section 'my section', ->
+
+      section = root.suites()[0]
+      expect(section).to.be.an.instanceOf BDD.Suite
+      expect(section.isSection).to.equal true
+      expect(section.parent).to.equal root
+
+
+
 
 
 

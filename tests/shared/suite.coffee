@@ -73,18 +73,6 @@ Test.run 'Suite (instance)',
       expectDisposed(child)
 
 
-Test.run 'Suite (describe.section)',
-  tearDown: -> BDD.reset()
-  tests:
-    'declares the suite as a "section"': (test) ->
-
-      root = describe 'root', ->
-              describe.section 'my section', ->
-
-
-      console.log 'root', root
-
-
 
 
 

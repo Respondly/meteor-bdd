@@ -32,7 +32,6 @@ Package.on_test(function (api) {
   api.add_files('tests/shared/method.coffee', ['client', 'server']);
   api.add_files('tests/shared/run.coffee', ['client', 'server']);
   api.add_files('tests/shared/spec.coffee', ['client', 'server']);
-  api.add_files('tests/shared/suite-section.coffee', ['client', 'server']);
   api.add_files('tests/shared/suite.coffee', ['client', 'server']);
 
 });
