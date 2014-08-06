@@ -45,9 +45,13 @@ class BDD.Spec extends BDD.Method
   @param done(err):   (Optional) A callback to invoke upon completion.
                                  An error if one occured (including timeout).
   ###
-  run: (options, done) ->
+  run: (options = {}, done) ->
     # Setup initial conditions.
     parentSuite = @parent
+    options.this ?= { spec:@ }
+
+    # Run the global [BDD.beforeIt] handers.
+    INTERNAL.beforeIt.invoke(options.this)
 
     runHandlers = (action, methods, next) ->
         if Object.isArray(methods)

@@ -1,5 +1,6 @@
 _currentSuite = null
 beforeDescribe = INTERNAL.beforeDescribe = new Handlers()
+beforeIt = INTERNAL.beforeIt = new Handlers()
 
 
 ###
@@ -9,8 +10,7 @@ Registers a handler to run immediately before the
   Example:
 
       BDD.beforeDescribe (context) ->
-          context.myHelper = ->
-
+          context.myHelper = (value) -> # A custom extension to the context.
 
       describe 'suite', ->
         @myHelper('foo')
@@ -25,6 +25,22 @@ Registers a handler to run immediately before the
 ###
 BDD.beforeDescribe = (func) -> beforeDescribe.push(func)
 
+
+
+###
+Registers a handler to run immediately before the
+"it" function is run.
+
+@param func(context): The function to run.
+                      [context] parameter is the object
+                      that will be passed to the describe function.
+                      Modify this object, to have custom context
+                      for the describe function to use.
+###
+BDD.beforeIt = (func) -> beforeIt.push(func)
+
+
+# ----------------------------------------------------------------------
 
 
 ###

@@ -1,4 +1,4 @@
-Test.run '[describe] beforeDescribe',
+Test.run '[beforeDescribe]',
   tearDown: -> BDD.reset()
   tests:
     'runs the [beforeDescribe] handlers': (test) ->
@@ -15,6 +15,8 @@ Test.run '[describe] beforeDescribe',
       expect(context.suite).to.equal suite
       expect(context.foo).to.equal 123
 
+
+# ----------------------------------------------------------------------
 
 
 Test.run '[describe] statement',
@@ -101,38 +103,6 @@ Test.run '[describe] statement',
       expect(suite1.specs()[0].name).to.equal 'foo'
       expect(suite1.specs()[1].name).to.equal 'foo'
 
-
-
-
-# ----------------------------------------------------------------------
-
-
-
-Test.run '[it] statement',
-  tearDown: -> BDD.reset()
-  tests:
-    'adds a spec to the root suite': (test) ->
-      it 'foo', ->
-      expect(BDD.suite.specs()[0]).to.be.an.instanceOf BDD.Spec
-      expect(BDD.suite.specs()[0].name).to.equal 'foo'
-
-
-    'adds a spec with no function': (test) ->
-      it()
-      expect(BDD.suite.specs()[0].func).to.equal undefined
-
-    'adds a spec to a suite': (test) ->
-      suite = BDD.describe 'foo', ->
-                it 'does something', ->
-      expect(suite.specs().length).to.equal 1
-      expect(suite.specs()[0].name).to.equal 'does something'
-
-    'adds a deeply nested spec': (test) ->
-      describe '1', ->
-        describe '2', ->
-          describe '3', ->
-            it 'foo', ->
-      expect(BDD.suite.suites()[0].suites()[0].suites()[0].specs()[0].name).to.equal 'foo'
 
 
 

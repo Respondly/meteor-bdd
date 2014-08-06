@@ -3,8 +3,7 @@
 
 
 if Meteor.isClient
-  Meteor.startup ->
-    $('title').html('Tests:bdd')
+  Meteor.startup -> $('title').html('Tests: BDD')
 
 
 
