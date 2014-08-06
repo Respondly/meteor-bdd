@@ -98,21 +98,25 @@ Suite = class BDD.Suite
 
   ###
   Retrieves the set of [before] handlers for the entire suite heirarchy.
+  @param deep: Flag indcating if the entire hierarchy should be returned.
   ###
   getBefore: (deep = false) -> getHandlers(@, 'before', deep)
 
   ###
   Retrieves the set of [beforeEach] handlers for the entire suite heirarchy.
+  @param deep: Flag indcating if the entire hierarchy should be returned.
   ###
   getBeforeEach: (deep = false) -> getHandlers(@, 'beforeEach', deep)
 
   ###
   Retrieves the set of [afterEach] handlers for the entire suite heirarchy.
+  @param deep: Flag indcating if the entire hierarchy should be returned.
   ###
   getAfterEach: (deep = false) -> getHandlers(@, 'afterEach', deep).reverse()
 
   ###
   Retrieves the set of [after] handlers for the entire suite heirarchy.
+  @param deep: Flag indcating if the entire hierarchy should be returned.
   ###
   getAfter: (deep = false) -> getHandlers(@, 'after', deep).reverse()
 
