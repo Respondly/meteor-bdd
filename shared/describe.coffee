@@ -1,4 +1,29 @@
 _currentSuite = null
+beforeDescribe = INTERNAL.beforeDescribe = new Handlers()
+
+
+###
+Registers a handler to run immediately before the
+"describe" function is run.
+
+  Example:
+
+      BDD.beforeDescribe (context) ->
+          context.myHelper = ->
+
+
+      describe 'suite', ->
+        @myHelper('foo')
+
+
+
+@param func(context): The function to run.
+                      [context] parameter is the object
+                      that will be passed to the describe function.
+                      Modify this object, to have custom context
+                      for the describe function to use.
+###
+BDD.beforeDescribe = (func) -> beforeDescribe.push(func)
 
 
 
@@ -33,7 +58,10 @@ describe = BDD.describe = (name, func) ->
   _currentSuite = suite
 
   # Configure the suite.
-  func() if Object.isFunction(func)
+  if Object.isFunction(func)
+    context = { suite: suite }
+    beforeDescribe.invoke(context)
+    func.call(context)
 
   # Finish up.
   result = _currentSuite

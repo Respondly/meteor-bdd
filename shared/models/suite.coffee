@@ -187,10 +187,6 @@ Suite.toString = (name, parent) ->
 # ----------------------------------------------------------------------
 
 
-###
-Resets the set of suites.
-###
-BDD.reset = -> BDD.suite = new BDD.Suite()
 BDD.reset() # Init.
 
 

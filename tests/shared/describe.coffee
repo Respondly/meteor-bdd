@@ -1,3 +1,22 @@
+Test.run '[describe] beforeDescribe',
+  tearDown: -> BDD.reset()
+  tests:
+    'runs the [beforeDescribe] handlers': (test) ->
+      count = 0
+      BDD.beforeDescribe -> count += 1
+      BDD.beforeDescribe -> count += 1
+      describe 'my suite', ->
+      expect(count).to.equal 2
+
+    'passes the mutatable context to the [beforeDescribe] handler': (test) ->
+      context = null
+      BDD.beforeDescribe (c) -> c.foo = 123
+      suite = describe 'my suite', -> context = @
+      expect(context.suite).to.equal suite
+      expect(context.foo).to.equal 123
+
+
+
 Test.run '[describe] statement',
   tearDown: -> BDD.reset()
   tests:
@@ -81,6 +100,7 @@ Test.run '[describe] statement',
       expect(suite1.specs().length).to.equal 2
       expect(suite1.specs()[0].name).to.equal 'foo'
       expect(suite1.specs()[1].name).to.equal 'foo'
+
 
 
 
@@ -213,7 +233,6 @@ Test.run 'describe.section',
       expect(section).to.be.an.instanceOf BDD.Suite
       expect(section.isSection).to.equal true
       expect(section.parent).to.equal root
-
 
 
 
