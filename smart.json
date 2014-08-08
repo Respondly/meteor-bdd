@@ -9,7 +9,7 @@
     "sugar": {},
     "munit": {},
     "util": {
-      "path": "../meteor-util"
+      "path": "../util"
     }
   }
 }
