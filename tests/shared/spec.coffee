@@ -22,7 +22,16 @@ Test.run 'Spec (class)',
       suite = describe 'foo', ->
         it 'spec', ->
       spec = suite.specs()[0]
-      expect(spec.toString()).to.equal '[SUITE:root::foo]->[SPEC:spec]'
+      expect(spec.toString()).to.equal '[SUITE:root::foo]->[SPEC:spec][0]'
+
+
+    '[toString] returns the index location hierarchy ': (test) ->
+      suite = describe 'foo', ->
+        it 'spec', ->
+        it 'spec', ->
+        it 'spec', ->
+      spec = suite.specs()[1]
+      expect(spec.toString()).to.equal '[SUITE:root::foo]->[SPEC:spec][1]'
 
 
     'has a unique ID [uid] as a hash of the [toString] value': (test) ->

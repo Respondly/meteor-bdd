@@ -14,6 +14,8 @@ Suite = class BDD.Suite
     @after      = []
     @afterEach  = []
 
+    INTERNAL.suiteCreatedHandlers.invoke(@)
+
 
   ###
   Destroyes the Suite.
@@ -51,25 +53,31 @@ Suite = class BDD.Suite
 
 
   ###
-  Adds a child-suite or spec.
-  @param value: A [Suite] or a [Spec].
+  Adds a child-suite.
+  @param value: The [Suite] to add.
   ###
-  add: (value) ->
-    # Add Suite.
-    if (value instanceof BDD.Suite)
-      value.parent = @
-      @items.push(value)
+  addSuite: (value) ->
+    value.parent = @
+    @items.push(value)
+    value
 
-    # Add Spec.
-    else if (value instanceof BDD.Spec)
-      value.parent = @
-      @items.push(value)
 
-    else
-      throw new Error('Type not supported.')
+  ###
+  Adds a spec/test.
+  @param value: The [Spec] to add.
+  ###
+  addSpec: (value) ->
+    value.parent = @
+    @items.push(value)
+    value
 
-    # Finish up.
-    return value
+
+
+
+  addBefore: (func) -> @before.push(new BDD.Method(func))
+  addBeforeEach: (func) -> @beforeEach.push(new BDD.Method(func))
+  addAfterEach: (func) -> @afterEach.push(new BDD.Method(func))
+  addAfter: (func) -> @after.push(new BDD.Method(func))
 
 
 

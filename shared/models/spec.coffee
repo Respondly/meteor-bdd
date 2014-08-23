@@ -16,8 +16,9 @@ class BDD.Spec extends BDD.Method
   ###
   constructor: (@name, @func) ->
     super @func
-    # @id = Util.hash(@name).toString() if Object.isString(@name)
     @parent = null # The parent Suite.
+    INTERNAL.specCreatedHandlers.invoke(@)
+
 
 
   ###
@@ -26,7 +27,8 @@ class BDD.Spec extends BDD.Method
   toString: ->
     result = "[SPEC:#{ @name ? 'Unnamed' }]"
     if @parent?
-      result = "#{ @parent.toString() }->#{ result }"
+      index = @parent.specs().indexOf(@)
+      result = "#{ @parent.toString() }->#{ result }[#{ index }]"
     result
 
 

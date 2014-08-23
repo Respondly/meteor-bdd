@@ -70,7 +70,7 @@ describe = BDD.describe = (name, func) ->
     suite = existingSuite
   else
     # Create the new suite.
-    suite = _currentSuite.add(new BDD.Suite(name))
+    suite = _currentSuite.addSuite(new BDD.Suite(name))
   _currentSuite = suite
 
   # Configure the suite.
@@ -109,7 +109,7 @@ Declares a "spec" (test specification).
 @param name: The name/descripion of the test.
 @param func: The test function.
 ###
-it = (name, func) -> getSuite()?.add(new BDD.Spec(name, func))
+it = (name, func) -> getSuite()?.addSpec(new BDD.Spec(name, func))
 
 
 # ----------------------------------------------------------------------
@@ -119,28 +119,28 @@ it = (name, func) -> getSuite()?.add(new BDD.Spec(name, func))
 Registers a function to run "before all" specs within the suite.
 @param func: The function to run.
 ###
-before = (func) -> getSuite()?.before.push(new BDD.Method(func))
+before = (func) -> getSuite()?.addBefore(func)
 
 
 ###
 Registers a function to run "before each" spec within the suite.
 @param func: The function to run.
 ###
-beforeEach = (func) -> getSuite()?.beforeEach.push(new BDD.Method(func))
+beforeEach = (func) -> getSuite()?.addBeforeEach(func)
 
 
 ###
 Registers a function to run "after all" specs within the suite.
 @param func: The function to run.
 ###
-afterEach = (func) -> getSuite()?.afterEach.push(new BDD.Method(func))
+afterEach = (func) -> getSuite()?.addAfterEach(func)
 
 
 ###
 Registers a function to run "after all" specs within the suite.
 @param func: The function to run.
 ###
-after = (func) -> getSuite()?.after.push(new BDD.Method(func))
+after = (func) -> getSuite()?.addAfter(func)
 
 
 

@@ -45,7 +45,7 @@ Test.run 'Suite (instance)',
 
     'adds a child suite': (test) ->
       childSuite = new BDD.Suite('child')
-      result = suite.add(childSuite)
+      result = suite.addSuite(childSuite)
       expect(result).to.equal childSuite
       expect(childSuite.parent).to.equal suite
       expect(suite.suites().length).to.equal 1
@@ -53,7 +53,7 @@ Test.run 'Suite (instance)',
       expect(suite.items).to.eql [childSuite]
 
     'adds a child spec': (test) ->
-      spec = suite.add(new BDD.Spec('foo'))
+      spec = suite.addSpec(new BDD.Spec('foo'))
       expect(spec).to.be.an.instanceOf BDD.Spec
       expect(spec.parent).to.equal suite
       expect(suite.specs()).to.eql [spec]
@@ -63,7 +63,7 @@ Test.run 'Suite (instance)',
     'disposes of a suite': (test) ->
       parent = new BDD.Suite('parent')
       child = new BDD.Suite('child')
-      parent.add(child)
+      parent.addSuite(child)
       parent.dispose()
 
       expectDisposed = (suite) ->

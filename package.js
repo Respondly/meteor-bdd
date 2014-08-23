@@ -12,7 +12,7 @@ Package.on_use(function (api) {
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('shared/ns.js', ['client', 'server']);
-  api.add_files('shared/api.coffee', ['client', 'server']);
+  api.add_files('shared/bdd.coffee', ['client', 'server']);
   api.add_files('shared/models/method.coffee', ['client', 'server']);
   api.add_files('shared/models/spec.coffee', ['client', 'server']);
   api.add_files('shared/models/suite.coffee', ['client', 'server']);
@@ -28,6 +28,7 @@ Package.on_test(function (api) {
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('tests/shared/_init.coffee', ['client', 'server']);
+  api.add_files('tests/shared/bdd.coffee', ['client', 'server']);
   api.add_files('tests/shared/describe.coffee', ['client', 'server']);
   api.add_files('tests/shared/find.coffee', ['client', 'server']);
   api.add_files('tests/shared/it.coffee', ['client', 'server']);
