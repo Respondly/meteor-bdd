@@ -5,7 +5,7 @@ Package.describe({
 
 
 Package.on_use(function (api) {
-  api.use(['coffeescript', 'sugar']);
+  api.use(['coffeescript']);
   api.use(['util']);
   api.export('BDD');
   api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
