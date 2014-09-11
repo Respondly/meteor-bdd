@@ -17,7 +17,7 @@ class BDD.Spec extends BDD.Method
   constructor: (@name, @func) ->
     super @func
     @parent = null # The parent Suite.
-    INTERNAL.specCreatedHandlers.invoke(@)
+    PKG.specCreatedHandlers.invoke(@)
 
 
 
@@ -53,7 +53,7 @@ class BDD.Spec extends BDD.Method
     options.this ?= { spec:@ }
 
     # Run the global [BDD.beforeIt] handers.
-    INTERNAL.beforeIt.invoke(options.this)
+    PKG.beforeIt.invoke(options.this)
 
     runHandlers = (action, methods, next) ->
         if Object.isArray(methods)

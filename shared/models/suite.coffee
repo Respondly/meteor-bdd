@@ -14,7 +14,7 @@ Suite = class BDD.Suite
     @after      = []
     @afterEach  = []
 
-    INTERNAL.suiteCreatedHandlers.invoke(@)
+    PKG.suiteCreatedHandlers.invoke(@)
 
 
   ###

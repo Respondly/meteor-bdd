@@ -1,6 +1,6 @@
 _currentSuite = null
-beforeDescribe = INTERNAL.beforeDescribe = new Handlers()
-beforeIt = INTERNAL.beforeIt = new Handlers()
+beforeDescribe = PKG.beforeDescribe = new Handlers()
+beforeIt = PKG.beforeIt = new Handlers()
 
 
 ###
