@@ -3,21 +3,10 @@ Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` st
 
 
 
-# TODO
-- change suite getBefore... to before (swap out arrays)
-
-
-
-# Installation
-When running for the first time:
-
-    mrt update
-    package update
-
 
 # Run tests
 
-    mrt test-packages bdd-runner
+    meteor test-packages --driver-package mike:pkgtest respondly:bdd
 
 
 

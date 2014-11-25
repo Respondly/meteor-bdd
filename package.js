@@ -1,12 +1,15 @@
 Package.describe({
-  summary: 'A runnable BDD suite/spec hierarhcy from describe/it statements.'
+  name: 'respondly:bdd',
+  summary: 'A runnable BDD suite/spec hierarhcy from describe/it statements.',
+  version: '0.0.1',
+  git: 'https://github.com/Respondly/meteor-bdd.git'
 });
 
 
 
 Package.on_use(function (api) {
-  api.use(['coffeescript']);
-  api.use(['util']);
+  api.use('coffeescript');
+  api.use('respondly:util');
   api.export('BDD');
   api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
 
@@ -23,8 +26,8 @@ Package.on_use(function (api) {
 
 
 Package.on_test(function (api) {
-  api.use(['munit', 'coffeescript', 'chai']);
-  api.use(['bdd', 'util']);
+  api.use(['mike:mocha-package@0.4.7', 'coffeescript']);
+  api.use(['respondly:bdd', 'respondly:util']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
   api.add_files('tests/shared/_init.coffee', ['client', 'server']);
