@@ -10,7 +10,7 @@ Package.describe({
 Package.onUse(function (api) {
   api.versionsFrom('1.0');
   api.use('coffeescript');
-  api.use('respondly:util');
+  api.use('respondly:util@1.0.0');
   api.export('BDD');
   api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
 
