@@ -1,7 +1,7 @@
 Package.describe({
   name: 'respondly:bdd',
   summary: 'A runnable BDD suite/spec hierarhcy from describe/it statements.',
-  version: '0.0.1',
+  version: '1.0.0',
   git: 'https://github.com/Respondly/meteor-bdd.git'
 });
 
