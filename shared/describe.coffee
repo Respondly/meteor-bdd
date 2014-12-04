@@ -60,7 +60,28 @@ describe = BDD.describe = (name, func) ->
   # Setup initial conditions.
   isRoot = not _currentSuite?
   startingSuite = _currentSuite ?= BDD.suite
+
+  if Object.isFunction(name)
+    func = name
+    name = null
   name = 'Untitled' if Util.isBlank(name)
+  name = name.trim()
+
+  # Check for [::] and put into distinct "decribe" blocks.
+  # if name.indexOf('::') isnt -1
+  #   parts = name.split('::')
+
+  #   addBaseDescribe = (index) ->
+  #       name = parts[index]
+  #       console.log 'name', name
+  #       if index < parts.length - 1
+  #         _currentSuite = describe(name)
+  #         addBaseDescribe(index + 1) # <== RECURSION.
+  #       else
+  #         _currentSuite = describe(name, func)
+  #         debugger
+  #   addBaseDescribe(0)
+  #   return
 
   # Get the Suite.
   uid = BDD.Suite.toUid(name, _currentSuite)

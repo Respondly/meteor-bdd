@@ -1,7 +1,7 @@
 Package.describe({
   name: 'respondly:bdd',
   summary: 'A runnable BDD suite/spec hierarhcy from describe/it statements.',
-  version: '1.0.0',
+  version: '1.0.1',
   git: 'https://github.com/Respondly/meteor-bdd.git'
 });
 
@@ -10,7 +10,7 @@ Package.describe({
 Package.onUse(function (api) {
   api.versionsFrom('1.0');
   api.use('coffeescript');
-  api.use('respondly:util@1.0.0');
+  api.use('respondly:util@1.0.1');
   api.export('BDD');
   api.export(['describe', 'it', 'before', 'beforeEach', 'afterEach', 'after']);
 
