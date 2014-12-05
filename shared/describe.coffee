@@ -51,8 +51,9 @@ Declares a test Suite.  For example:
           expect(true).to.equal true
 
 
-@param name: The name/description of the suite.
-@param func: The suite function.
+@param name:  The name/description of the suite.
+              May be either a string of a function.
+@param func:  The suite function.
 
 @returns the resulting [Suite] object.
 ###
@@ -61,11 +62,11 @@ describe = BDD.describe = (name, func) ->
   isRoot = not _currentSuite?
   startingSuite = _currentSuite ?= BDD.suite
 
-  if Object.isFunction(name)
+  if Object.isFunction(name) and not Object.isFunction(func)
     func = name
     name = null
   name = 'Untitled' if Util.isBlank(name)
-  name = name.trim()
+  name = name.trim() if Object.isString(name)
 
   # Check for [::] and put into distinct "decribe" blocks.
   # if name.indexOf('::') isnt -1
