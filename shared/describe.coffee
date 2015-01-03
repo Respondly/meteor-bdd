@@ -68,21 +68,24 @@ describe = BDD.describe = (name, func) ->
   name = 'Untitled' if Util.isBlank(name)
   name = name.trim() if Object.isString(name)
 
-  # Check for [::] and put into distinct "decribe" blocks.
-  # if name.indexOf('::') isnt -1
-  #   parts = name.split('::')
-
-  #   addBaseDescribe = (index) ->
-  #       name = parts[index]
-  #       console.log 'name', name
-  #       if index < parts.length - 1
-  #         _currentSuite = describe(name)
-  #         addBaseDescribe(index + 1) # <== RECURSION.
-  #       else
-  #         _currentSuite = describe(name, func)
-  #         debugger
-  #   addBaseDescribe(0)
-  #   return
+  # Check for [::] and put into distinct "describe" blocks.
+  # This allows common suite structures to be declared concisely.
+  # For example:
+  #
+  #     describe 'Core::UI Harness::Nested', ->
+  #
+  if Object.isString(name) and name.indexOf('::') isnt -1
+    names = name.remove(/^::/).remove(/::$/).split('::')
+    addDescribeAt = (index) ->
+          isLast = index is names.length - 1
+          name = names[index]?.trim()
+          fn = func if isLast
+          _currentSuite = suite = BDD.describe(name, fn)
+          addDescribeAt(index + 1) if not isLast # <== RECURSION.
+          suite
+    suite = addDescribeAt(0)
+    _currentSuite = startingSuite
+    return suite
 
   # Get the Suite.
   uid = BDD.Suite.toUid(name, _currentSuite)
