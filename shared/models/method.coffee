@@ -77,13 +77,13 @@ BDD.runMany = (methods, options, done) ->
 
 
 ###
-Invokes a set of methods.
+Invokes the given method.
 @param method:          The [Method] object.
 @param options:         (Optional)
                           - this:    The [this] context to run the method with.
                           - throw:   Flag indicating if errors should be thrown.
                                      Default:false
-@param done(err):       A callback to invoke upon completion.
+@param done(err, result): A callback to invoke upon completion.
                           - err: An error if one occured (including timeout).
 ###
 BDD.run = (method, options = {}, done) ->
@@ -117,17 +117,17 @@ BDD.run = (method, options = {}, done) ->
 
     # Invoke async function.
     try
-      method.func.call context, ->
+      method.func.call context, (e, r) ->
           timer.stop()
-          done?(null)
+          done?(e, r)
     catch e
       onError(e)
 
   else
     # Invoke synchronously.
     try
-      method.func.call(context)
-      done?(null)
+      result = method.func.call(context)
+      done?(null, result)
     catch e
       onError(e)
 

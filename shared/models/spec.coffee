@@ -44,12 +44,15 @@ class BDD.Spec extends BDD.Method
                          - this:    The [this] context to run the method with.
                          - throw:   Flag indicating if errors should be thrown.
                                     Default:false
-  @param done(err):   (Optional) A callback to invoke upon completion.
-                                 An error if one occured (including timeout).
+  @param done(err, result): (Optional) A callback to invoke upon completion.
+                             An error if one occured (including timeout).
   ###
   run: (options = {}, done) ->
     # Setup initial conditions.
     parentSuite = @parent
+    if Object.isFunction(options)
+      done = options
+      options = {}
     options.this ?= { spec:@ }
 
     # Run the global [BDD.beforeIt] handers.
@@ -75,11 +78,12 @@ class BDD.Spec extends BDD.Method
 
     # Run the [beforeEach] => [Spec] => [afterEach] methods.
     runHandlers 'beforeEach', beforeEachHandlers, =>
-      BDD.run @, options, (err) =>
+      BDD.run @, options, (err, result) =>
           if err?
             done?(err) # Failed on spec, don't continue.
           else
-            runHandlers 'afterEach', afterEachHandlers, => done?(null)
+            runHandlers 'afterEach', afterEachHandlers, =>
+              done?(null, result)
 
 
 
