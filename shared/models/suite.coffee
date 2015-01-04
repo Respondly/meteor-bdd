@@ -90,7 +90,7 @@ Suite = class BDD.Suite
   find: (query = {}) ->
     result = []
     if uid = query.uid
-      return [ findByUid(uid, @) ].compact()
+      return [findByUid(uid, @)].compact()
 
     else
       [] # No matches.
