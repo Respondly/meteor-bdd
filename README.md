@@ -1,8 +1,7 @@
 # BDD Runner
 Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` statements.
 
-
-
+[![Circle CI](https://circleci.com/gh/Respondly/meteor-bdd.svg?style=svg)](https://circleci.com/gh/Respondly/meteor-bdd)
 
 # Run tests
 
