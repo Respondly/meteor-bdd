@@ -28,8 +28,23 @@ Package.onUse(function (api) {
 
 
   /*
-     NOTE: commenting tests out for now
+     NOTE: main _test folder has been commented out for now.
      need to solve naming conflict at some point (bdd and mocha both
      use it/describe)
   */
 
+
+
+Package.onTest(function(api){
+  api.use(['mike:mocha-package@0.4.7', 'coffeescript']);
+  api.use(['respondly:bdd', 'respondly:util']);
+
+  // Generated with: github.com/philcockfield/meteor-package-paths
+  api.addFiles('tests/shared/dummy.coffee', ['client', 'server']);
+
+});
+
+
+// Package.onTest(function (api) {
+//   api.use(['mike:mocha-package@0.4.7', 'coffeescript']);
+//   api.use(['respondly:bdd', 'respondly:util']);
