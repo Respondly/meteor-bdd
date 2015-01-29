@@ -26,24 +26,10 @@ Package.onUse(function (api) {
 
 
 
-// Package.onTest(function (api) {
-//   api.use(['mike:mocha-package@0.4.7', 'coffeescript']);
-//   api.use(['respondly:bdd', 'respondly:util']);
-//   /*
-//      commenting out for now
-//      need to solve naming conflict at some point (bdd and mocha both
-//      use it/describe)
-//   */
 
-  // Generated with: github.com/philcockfield/meteor-package-paths
-  api.addFiles('tests/shared/_init.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/bdd.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/describe.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/find.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/it.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/method.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/run.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/spec.coffee', ['client', 'server']);
-  api.addFiles('tests/shared/suite.coffee', ['client', 'server']);
+  /*
+     NOTE: commenting tests out for now
+     need to solve naming conflict at some point (bdd and mocha both
+     use it/describe)
+  */
 
-// });
