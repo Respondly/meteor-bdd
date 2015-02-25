@@ -11,4 +11,4 @@ dependencies:
 
 test:
   override:
-    - PACKAGE_DIRS="..:$HOME" meteor test-packages --velocity --driver-package respondly:test-reporter respondly:bdd
+    - PACKAGE_DIRS="..:$HOME" meteor test-packages --velocity respondly:bdd 2>&1
