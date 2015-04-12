@@ -1,5 +1,3 @@
-#= require ./method
-
 ###
 Represents a single spec/test.
 ###
@@ -84,6 +82,3 @@ class BDD.Spec extends BDD.Method
           else
             runHandlers 'afterEach', afterEachHandlers, =>
               done?(null, result)
-
-
-
