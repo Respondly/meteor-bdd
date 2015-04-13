@@ -8,7 +8,6 @@ Constructs a runnable `suite / spec` hierarchy from BDD style `describe / it` st
     meteor test-packages --driver-package mike:pkgtest respondly:bdd
 
 
-
 # The MIT License (MIT)
 
 Copyright © 2015, **Respondly**
