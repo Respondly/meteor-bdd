@@ -36,7 +36,7 @@ Package.onUse(function (api) {
 
 
 Package.onTest(function(api){
-  api.use(['mike:mocha-package@0.5.6', 'coffeescript']);
+  api.use(['mike:mocha-package@0.5.7', 'coffeescript']);
   api.use(['respondly:bdd', 'respondly:util']);
 
   // Generated with: github.com/philcockfield/meteor-package-paths
@@ -46,5 +46,5 @@ Package.onTest(function(api){
 
 
 // Package.onTest(function (api) {
-//   api.use(['mike:mocha-package@0.5.6', 'coffeescript']);
+//   api.use(['mike:mocha-package@0.5.7', 'coffeescript']);
 //   api.use(['respondly:bdd', 'respondly:util']);
